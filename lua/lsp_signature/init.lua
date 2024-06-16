@@ -265,7 +265,9 @@ local close_events = { 'InsertLeave', 'BufHidden', 'ModeChanged' }
 -- Note: 0.6.x   - signature_help(err, {result}, {ctx}, {config})
 local signature_handler = function(err, result, ctx, config)
   if err ~= nil then
-    print('lsp_signatur handler', err)
+    if _LSP_SIG_CFG.debug then
+      print('lsp_signatur handler', err)
+    end
     return
   end
 
@@ -1019,7 +1021,9 @@ end
 
 local signature_should_close_handler = function(err, result, ctx, _)
   if err ~= nil then
-    print(err)
+    if _LSP_SIG_CFG.debug then
+      print(err)
+    end
     helper.cleanup_async(true, 0.01, true)
     status_line = { hint = '', label = '' }
     return
